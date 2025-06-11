@@ -18,6 +18,11 @@ h1 {
   margin: 2em 1rem;
 }
 
+h2:focus {
+  outline: 3px solid blueviolet;
+  outline-offset: 4px;
+}
+
 @media only screen and (min-width: 35em) {
   h1 {
     font-size: 7em;
@@ -359,10 +364,6 @@ section.active .landing__container::after {
   );
 }
 
-.hidden {
-  display: none;
-}
-
 .error {
   color: red;
   font-weight: bold;
@@ -370,6 +371,7 @@ section.active .landing__container::after {
   margin-top: 0.5rem;
 }
 
+h2
 .success {
   color: green;
   font-weight: bold;

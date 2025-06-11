@@ -53,7 +53,6 @@ navList.forEach((item) => {
 function setActiveSection() {
   window.addEventListener("scroll", () => {
     let activeSection = null;
-
     sections.forEach((section) => {
       const react = section.getBoundingClientRect();
       if (react.top >= -100 && react.top < window.innerHeight / 2) {
@@ -69,19 +68,39 @@ function setActiveSection() {
   });
 }
 
+let scrollTimeout;
 // Smooth scrolling
 document.querySelectorAll("#navbar__list a").forEach((link) => {
   link.addEventListener("click", function (event) {
     event.preventDefault();
+
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+
     const targetID = this.getAttribute("href").substring(1);
     const targetElement = document.getElementById(targetID);
+
+    // If the target element exists, scroll to it
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
+      const headerOffSet = document.querySelector("header").offsetHeight;
+
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      scrollTimeout = setTimeout(() => {
+        window.scrollBy({ top: -headerOffSet, left: 0, behavior: "smooth" });
+
+        sections.forEach((sec) => sec.classList.remove("active"));
+        targetElement.classList.add("active");
+
+        // Set focus on the heading of the target section
+        const heading = targetElement.querySelector("h2");
+        if (heading) {
+          heading.setAttribute("tabindex", "-1");
+          heading.focus();
+        }
+      }, 500);
     }
-    setTimeout(() => {
-      sections.forEach((sec) => sec.classList.remove("active"));
-      targetElement.classList.add("active");
-    }, 300);
   });
 });
 
@@ -100,11 +119,11 @@ function addComment() {
   text.value = "";
   commentVerifier.innerHTML = "";
 
-  commentList.push(obj);
+  commentList.push(obj); // add the new comment to the list
 
-  localStorage.setItem("comments", JSON.stringify(commentList));
+  localStorage.setItem("comments", JSON.stringify(commentList)); // store the comments in localStorage
 
-  displayComments(commentList);
+  displayComments(commentList); // display the comments
 }
 
 // Display submitted comments in the comments section
@@ -127,25 +146,51 @@ function displayComments(parameter) {
 // An event listener to the comment form to handle submission, validation and feedback
 commentForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (user.value === "") {
-    alert("Please enter your name");
+
+  // Validate user name
+  if (user.value.trim() === "") {
+    alert("Please enter a valid name");
+    return;
+  } else if (user.value.length < 3) {
+    alert("Name must be at least 3 characters long");
+    return;
+  } else if (user.value.length > 50) {
+    alert("Name must not exceed 50 characters");
     return;
   }
 
-  if (email.value === "" && !email.value.includes("@")) {
+  // Validate email
+  if (
+    email.value.trim() === "" ||
+    !email.value.includes("@") ||
+    !email.value.includes(".")
+  ) {
     alert("Please enter a valid email adress (e.g., example@domain.com)");
     return;
   }
 
-  if (text.value === "") {
+  // Validate comment text
+  if (text.value.trim() === "") {
     alert("Please enter a comment");
+    return;
+  } else if (text.value.length < 10) {
+    alert("Comment must be at least 10 characters long");
+    return;
+  } else if (text.value.length > 200) {
+    alert("Comment must not exceed 200 characters");
     return;
   }
 
-  showFeedback("Your comment has been submitted successfully!", false);
-
-  addComment();
-  displayComments(commentList);
+  try {
+    addComment();
+    displayComments(commentList);
+    showFeedback("✔️Your comment has been submitted successfully!", false);
+  } catch (error) {
+    showFeedback(
+      "❌An error occurred while submitting your comment. Please try again.",
+      true
+    );
+  }
 });
 
 // Show feedback message after submitting a comment
@@ -153,7 +198,11 @@ function showFeedback(message, isError = true) {
   feedback.textContent = message;
   feedback.classList.remove("error", "success");
   feedback.classList.add(isError ? "error" : "success");
-  feedback.classList.remove("hidden");
+  feedback.hidden = false;
+
+  setTimeout(() => {
+    feedback.hidden = true;
+  }, 3000);
 }
 
 // Check if there are stored comments in localStorage and display them if available
