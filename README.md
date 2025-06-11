@@ -21,7 +21,7 @@ I modifed the CSS file so that the comments have a style matching the page's sty
 I have called all the elements I needed and stored them into variables with meaningful names, also I bulit the nav-bar dynamicly using appendChild and createElement functions, added a smooth scrolling method, an active state, an area where the user's submitted comments are and stored them into localStorage so that they don't disapear on refresh.
 
 
-## Update
+## Updates
 
 Changes:
 1. Added aria-labels to enhance accessibilty for screen readers in the HMTL file
