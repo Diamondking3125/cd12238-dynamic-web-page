@@ -74,6 +74,7 @@ document.querySelectorAll("#navbar__list a").forEach((link) => {
   link.addEventListener("click", function (event) {
     event.preventDefault();
 
+    // Clear any existing timeout to prevent multiple scrolls
     if (scrollTimeout) {
       clearTimeout(scrollTimeout);
     }
