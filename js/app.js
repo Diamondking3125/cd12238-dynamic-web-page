@@ -49,7 +49,7 @@ navList.forEach((item) => {
   navBar.appendChild(li);
 });
 
-// Add an active class to the section currently in view
+// Add an active function to the section currently in view
 function setActiveSection() {
   window.addEventListener("scroll", () => {
     let activeSection = null;
@@ -88,7 +88,7 @@ document.querySelectorAll("#navbar__list a").forEach((link) => {
       targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
 
       scrollTimeout = setTimeout(() => {
-        window.scrollBy({ top: -headerOffSet, left: 0, behavior: "smooth" });
+        window.scrollBy({ top: -headerOffSet, left: 0, behavior: "smooth" }); // Adjust scroll position to account for fixed header
 
         sections.forEach((sec) => sec.classList.remove("active"));
         targetElement.classList.add("active");
@@ -181,11 +181,12 @@ commentForm.addEventListener("submit", (e) => {
     return;
   }
 
+  // If all validations pass, add the comment
   try {
     addComment();
     displayComments(commentList);
     showFeedback("✔️Your comment has been submitted successfully!", false);
-  } catch (error) {
+  } catch (error) { // Handle any errors that occur during comment submission
     showFeedback(
       "❌An error occurred while submitting your comment. Please try again.",
       true
@@ -215,4 +216,5 @@ if (storedComments) {
   commentVerifier.innerHTML = `<h3>No comments yet</h3>`;
 }
 
+// Call the function to set the active section
 setActiveSection();
