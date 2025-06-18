@@ -86,13 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // If the target element exists, scroll to it
       if (targetElement) {
-        const headerOffSet = document.querySelector("header").offsetHeight;
-
-        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        targetElement.scrollIntoView({ behavior: "smooth"});
 
         scrollTimeout = setTimeout(() => {
-          window.scrollBy({ top: -headerOffSet, left: 0, behavior: "smooth" }); // Adjust scroll position to account for fixed header
-
           sections.forEach((sec) => sec.classList.remove("active"));
           targetElement.classList.add("active");
 
@@ -102,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             heading.setAttribute("tabindex", "-1");
             heading.focus();
           }
-        }, 500);
+        }, 600);
       }
     });
   });
