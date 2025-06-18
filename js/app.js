@@ -111,14 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
       name: user.value,
       email: email.value,
       text: text.value,
-      id: Date.now(),
     };
+  
+    commentList.push(obj); // add the new comment to the list
+
     user.value = "";
     email.value = "";
     text.value = "";
     commentVerifier.innerHTML = "";
-
-    commentList.push(obj); // add the new comment to the list
 
     localStorage.setItem("comments", JSON.stringify(commentList)); // store the comments in localStorage
 

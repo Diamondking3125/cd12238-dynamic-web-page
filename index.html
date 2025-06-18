@@ -173,27 +173,25 @@
           <p id="secondary__p">Leave your comments below:</p>
           <div class="comments__container">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" />
+            <input type="text" id="name" name="name">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" />
+            <input type="email" id="email" name="email">
             <label for="comment">Comment:</label>
             <textarea
               id="comment"
               name="comment"
               rows="4"
               title="Write your comment here...."
-              placeholder="Write your comment here...."
-              aria-describedby="secondary__p"></textarea>
+              placeholder="Write your comment here...."></textarea>
             <button type="submit" id="submit" aria-label="Submit comment">Submit</button>
           </div>
-          <div id="feedback" role="alert" aria-live="assertive"></div>
         </form>
+        <div id="feedback" role="alert" aria-live="assertive"></div>
       </div>
     </section>
     <section id="submitted__comments" data-nav="submitted__comments">
       <div class="landing__container">
         <h2>User's Comments</h2>
-        <p id="secondary__p">All comments will be displayed below:</p>
         <p id="no-comments"></p>
         <ul id="comments-list"></ul>
       </div>
