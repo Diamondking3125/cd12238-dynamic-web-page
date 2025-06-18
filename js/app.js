@@ -184,18 +184,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // If all validations pass, add the comment
-    try {
-      addComment();
-      displayComments(commentList);
-      showFeedback("✔️Your comment has been submitted successfully!", false);
-    } catch (error) {
-      // Handle any errors that occur during comment submission
-      showFeedback(
-        "❌An error occurred while submitting your comment. Please try again.",
-        true
-      );
-    }
+    addComment();
+    displayComments(commentList);
+    showFeedback("✔️Your comment has been submitted successfully!", false);
   });
 
   // Show feedback message after submitting a comment
